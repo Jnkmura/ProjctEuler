@@ -1,4 +1,4 @@
-# ProjctEuler
+# ProjectEuler
 
 Scripts to solve ProjectEuler problems and to learn Python programming language at the same time.
 
