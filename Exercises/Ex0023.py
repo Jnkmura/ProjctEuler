@@ -2,45 +2,44 @@
 #23.
 import math
 import time
-start = time.clock()
+import numpy as np
+start = time.process_time()
 
 def divisors_new(n):
-    import math
-    divisors_list = []
+    divisors_list = set()
     for i in range(1,int(math.sqrt(n))+1):
         if n % i == 0:
-            divisors_list.append(i)
-            divisors_list.append(int(n/i))
-    divisors_list.remove(max(divisors_list))
+            divisors_list.add(i)
+            divisors_list.add(int(n/i))
+    divisors_list = list(divisors_list)
+    divisors_list.remove(n)
     return divisors_list
 
 def is_abundant(n):
     sumdiv = sum(divisors_new(n))
     if sumdiv > n:
         return True
-    else:
-        return False
+    return False
 
 abundant = []
-nabundant = []
-maxavalue = 10000
+maxvalue = 28124
 
-for i in range(1,maxavalue):
-    if is_abundant(i) == True:
+for i in range(1,maxvalue):
+    if is_abundant(i):
         abundant.append(i)
-    else:
-        nabundant.append(i)
 
-i = len(abundant)
-for i1 in abundant:
-    for i2 in range(len(abundant[0:i])):
-        total = i1 + abundant[-(1+i2)]
-        if total in nabundant:
-            nabundant.remove(total)
-        i = i - 1
-    i = len(abundant)
+print(abundant[0:100])
 
-       
-print(sum(nabundant))
-print("Time taken = %.2f" % (time.clock()-start))
+numbers = np.arange(1, maxvalue)
+poss = np.add.outer(abundant, abundant)
+poss = poss.reshape(len(abundant) ** 2)
+poss = np.array(list(set(poss[poss < maxvalue])))
+
+total = 0
+for n in numbers:
+    if n not in poss:
+        total += n
+
+print(total)       
+print("Time taken = %.2f" % (time.process_time()-start))
     
