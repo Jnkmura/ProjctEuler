@@ -18,7 +18,7 @@ def pair_prime(vec):
         return True
     return False
     
-numbers = np.arange(2, 1000, 1)
+numbers = np.arange(2, 10000, 1)
 primes = numbers[list(map(is_prime, numbers))]
 prod = np.array(list(product(primes, primes)))
 
@@ -36,10 +36,18 @@ candidates = []
 for p1, v1 in pairs.items():
     for p2, v2 in pairs.items():
         intersec = list(set(v1).intersection(set(v2)))
-        if len(intersec) == 4:
+        if len(intersec) == 5:
             candidates.append(intersec)
 
-candidates = np.array(candidates)
-print(sorted(np.sum(candidates, axis = 1)))
-
+real = []
+for c in candidates:
+    candidates_prod = np.array(list(product(c, c)))
+    valid = list(map(pair_prime, candidates_prod))
+    if valid.count(False) >= 6:
+        continue
+    else:
+        real.append(c)
+    
+real = np.array(real)
+print(min(np.sum(real, axis = 1)))
 print("Time taken = %.2f" % (process_time()-start))
