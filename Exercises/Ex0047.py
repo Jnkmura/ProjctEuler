@@ -35,7 +35,7 @@ if __name__ == '__main__':
         if is_prime(i):
             PRIMES.append(i)
 
-    for i in tqdm(range(2, 200000)):
+    for i in tqdm(range(2, 150000)):
         seq_added = False
         factors = get_primes_factors(i)
         if len(set(factors)) == factors_obj and (
